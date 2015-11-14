@@ -1,4 +1,4 @@
-# Progress
+# Rill Progress
 
 Adds a simple loading bar during requests with Rill.
 The progress bar is powered by [nprogress](http://ricostacruz.com/nprogress).
