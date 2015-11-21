@@ -1,6 +1,6 @@
 {
   "name": "@rill/progress",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple loading bar for Rill applications.",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
   "license": "MIT",

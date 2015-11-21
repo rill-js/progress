@@ -27,8 +27,12 @@ module.exports = function (opts) {
 			return next();
 		}
 
-		// Hashes don't trigger a page load.
-		if (req.hash) return next();
+		// Hashes don't trigger a page load. (But can end one.)
+		if (req.hash) {
+			if (bar.isStarted()) bar.done();
+			return next();
+		}
+
 		if (!bar.isStarted()) bar.start();
 
 		return next()
