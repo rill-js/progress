@@ -1,3 +1,6 @@
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![Chat about Rill at https://gitter.im/rill-js/rill](https://badges.gitter.im/rill-js/rill.svg)](https://gitter.im/rill-js/rill?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 # Rill Progress
 
 Adds a simple loading bar during requests with Rill.
@@ -36,6 +39,6 @@ All styles are injected into the document when the page is loaded. You can see t
 
 ### Contributions
 
-* Use gulp to run tests.
+* Use `npm test` to run tests.
 
 Please feel free to create a PR!

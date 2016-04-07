@@ -1,17 +1,34 @@
 {
   "name": "@rill/progress",
-  "version": "0.2.0",
   "description": "Simple loading bar for Rill applications.",
+  "version": "1.0.0",
   "author": "Dylan Piercey <pierceydylan@gmail.com>",
+  "browser": "client/index.js",
+  "bugs": "https://github.com/rill-js/progress/issues",
+  "dependencies": {
+    "nprogress": "^0.2.0",
+    "statuses": "^1.2.1"
+  },
+  "homepage": "https://github.com/rill-js/progress",
+  "keywords": [
+    "bar",
+    "isomorphic",
+    "progress",
+    "progressbar",
+    "rill",
+    "universal"
+  ],
   "license": "MIT",
   "main": "server/index.js",
-  "browser": "client/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/rill-js/progress"
   },
-  "dependencies": {
-    "nprogress": "^0.2.0",
-    "statuses": "^1.2.1"
+  "scripts": {
+    "test": "standard --verbose | snazzy"
+  },
+  "devDependencies": {
+    "snazzy": "^3.0.0",
+    "standard": "^6.0.8"
   }
 }
