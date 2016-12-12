@@ -3,6 +3,18 @@ var url = require('url')
 var bar = require('nprogress')
 var statuses = require('statuses')
 var started = false
+var done = bar.done
+// Patch bar done to return a promise.
+bar.done = function () {
+  var remove = bar.remove
+  return new Promise(function (resolve) {
+    bar.remove = function () {
+      remove.call(bar)
+      resolve()
+    }
+    done.call(bar)
+  })
+}
 
 module.exports = function (opts) {
   opts = opts || {}
@@ -49,7 +61,7 @@ module.exports = function (opts) {
         statuses.redirect[res.status] ||
         (res.get('Location') && !res.get('Refresh'))
         ) return
-      bar.done()
+      return bar.done()
     }
 
     function onError (err) {
