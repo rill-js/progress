@@ -10,6 +10,9 @@ bar.done = function () {
   return new Promise(function (resolve) {
     bar.remove = function () {
       remove.call(bar)
+      if (document.documentElement.getAttribute('class') === ' ') {
+        document.documentElement.removeAttribute('class')
+      }
       resolve()
     }
     done.call(bar)
