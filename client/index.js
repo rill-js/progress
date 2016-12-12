@@ -42,35 +42,40 @@ module.exports = function (opts) {
     // Skip initial renders.
     if (!started && !opts.onload) {
       started = true
-      return next()
+      return next().then(onStart, onStart)
     }
 
     // Hashes on the same path don't trigger a page load. (But can end one.)
     if (hash && referrer && url.parse(referrer).path === path) {
-      if (bar.isStarted()) bar.done()
+      if (bar.isStarted()) return bar.done().then(next)
       return next()
     }
 
     // Ensure the progress bar is started.
     if (!bar.isStarted()) bar.start()
 
-    return next()
-      .then(onDone)
-      .catch(onError)
+    return next().then(onDone, onDone)
 
-    function onDone () {
-      if (
-        // If we have been redirected then we want the bar to continue to load.
-        statuses.redirect[res.status] ||
-        (res.get('Location') && !res.get('Refresh'))
-        ) return
-      return bar.done()
+    function onStart (err) {
+      // Reset the started if we got a redirect on the first request.
+      started = !isRedirect(res)
+      return err ? Promise.reject(err) : Promise.resolve()
     }
 
-    function onError (err) {
-      // Forward error after killing the progress bar.
-      onDone()
-      throw err
+    function onDone (err) {
+      var next = err ? Promise.reject(err) : Promise.resolve()
+      if (isRedirect(res)) return next
+      else return bar.done().then(next)
     }
   }
+}
+
+/**
+ * Returns true if a given server response was redirected.
+ */
+function isRedirect (res) {
+  return (
+    statuses.redirect[res.status] ||
+    (res.get('Location') && !res.get('Refresh'))
+  )
 }
