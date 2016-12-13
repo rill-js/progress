@@ -3,21 +3,6 @@ var url = require('url')
 var bar = require('nprogress')
 var statuses = require('statuses')
 var started = false
-var done = bar.done
-// Patch bar done to return a promise.
-bar.done = function () {
-  var remove = bar.remove
-  return new Promise(function (resolve) {
-    bar.remove = function () {
-      remove.call(bar)
-      if (document.documentElement.getAttribute('class') === ' ') {
-        document.documentElement.removeAttribute('class')
-      }
-      resolve()
-    }
-    done.call(bar)
-  })
-}
 
 module.exports = function (opts) {
   opts = opts || {}
@@ -47,7 +32,7 @@ module.exports = function (opts) {
 
     // Hashes on the same path don't trigger a page load. (But can end one.)
     if (hash && referrer && url.parse(referrer).path === path) {
-      if (bar.isStarted()) return bar.done().then(next)
+      if (bar.isStarted()) bar.done()
       return next()
     }
 
@@ -59,13 +44,12 @@ module.exports = function (opts) {
     function onStart (err) {
       // Reset the started if we got a redirect on the first request.
       started = !isRedirect(res)
-      return err ? Promise.reject(err) : Promise.resolve()
+      if (err) return Promise.reject(err)
     }
 
     function onDone (err) {
-      var next = err ? Promise.reject(err) : Promise.resolve()
-      if (isRedirect(res)) return next
-      else return bar.done().then(next)
+      if (!isRedirect(res)) bar.done()
+      if (err) return Promise.reject(err)
     }
   }
 }
