@@ -25,10 +25,7 @@ module.exports = function (opts) {
     var referrer = req.get('Referrer')
 
     // Skip initial renders.
-    if (!started && !opts.onload) {
-      started = true
-      return next().then(onStart, onStart)
-    }
+    if (!started && !opts.onload) return next().then(onStart, onStart)
 
     // Hashes on the same path don't trigger a page load. (But can end one.)
     if (hash && referrer && url.parse(referrer).path === path) {
