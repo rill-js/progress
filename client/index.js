@@ -1,5 +1,5 @@
 'use strict'
-var url = require('url')
+var url = require('mini-url')
 var bar = require('nprogress')
 var statuses = require('statuses')
 var started = false
@@ -21,16 +21,18 @@ module.exports = function (opts) {
     var req = ctx.req
     var res = ctx.res
     var hash = req.hash
-    var path = req.path
     var referrer = req.get('Referrer')
 
     // Skip initial renders.
     if (!started && !opts.onload) return next().then(onStart, onStart)
 
     // Hashes on the same path don't trigger a page load. (But can end one.)
-    if (hash && referrer && url.parse(referrer).path === path) {
-      if (bar.isStarted()) bar.done()
-      return next()
+    if (hash && referrer) {
+      var parsed = url.parse(referrer)
+      if (parsed.pathname === req.pathname && parsed.search === req.search) {
+        if (bar.isStarted()) bar.done()
+        return next()
+      }
     }
 
     // Ensure the progress bar is started.
