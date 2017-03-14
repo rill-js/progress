@@ -28,7 +28,7 @@ module.exports = function (opts) {
 
     // Hashes on the same path don't trigger a page load. (But can end one.)
     if (hash && referrer) {
-      var parsed = url.parse(referrer)
+      var parsed = url.parse(referrer, req.href)
       if (parsed.pathname === req.pathname && parsed.search === req.search) {
         if (bar.isStarted()) bar.done()
         return next()
