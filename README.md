@@ -3,7 +3,7 @@
   <img src="https://raw.githubusercontent.com/rill-js/rill/master/Rill-Icon.jpg" alt="Rill"/>
   <br/>
   @rill/progress
-	<br/>
+  <br/>
 
   <!-- Stability -->
   <a href="https://nodejs.org/api/documentation.html#documentation_stability_index">
@@ -50,10 +50,10 @@ app.use(progress({ speed: 500, easing: 'ease' }))
 
 ```js
 {
-	color:   "green", // The default color of the progress bar and spinner.
-	spinner: true,    // Show the spinning circle along with the bar.
-	parent:  "body",  // The element that will contain the progress bar.
-	style:   true     // Uses inline styles to create the progress bar. Set to false to use your own.
+  color: "green", // The default color of the progress bar and spinner.
+  spinner: true,    // Show the spinning circle along with the bar.
+  parent: "body",  // The element that will contain the progress bar.
+  style: true     // Uses inline styles to create the progress bar. Set to false to use your own.
 }
 ```
 
